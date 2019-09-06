@@ -85,7 +85,7 @@ export default CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY;
  #### Typical mutation
 @snapend
 
-@snap[midpoint text-07]
+@snap[midpoint span-100 text-07]
 ```
 import gql from 'graphql-tag';
 
@@ -112,7 +112,7 @@ export const SET_CHECKBOX_SELECTIONS_MUTATION = gql`
 @snapend
 
 @snap[midpoint text-07]
-```
+```typescript
 export const deliveryDefaults = {
   campaignDelivery: {
     __typename: 'CampaignDelivery',
@@ -148,9 +148,71 @@ export const deliveryDefaults = {
 @snap[midpoint span-100 text-07]
  * Look at local.graphql.js in portal *
  
+ 
  However, somewhat contrary to the last slide...
+ 
  
 You can extend the Query and Mutation types and add your own graphql types in this file. The system doesn't seem very strict about this. In fact, if you do not create types for your local cache items, the app will still function as expected.
 @snapend
 
 ---
+
+@snap[north span-100]
+#### Using queries / mutations in React
+@snapend
+
+@snap[midpoint span-100 text-07]
+ Using the graphql HOC seems to be the most straight-forward and decoupled approach.
+@snapend
+
+---
+
+```
+const deliveryConfig = {
+  props: ({
+    ownProps,
+    data: {
+      campaignDelivery: {
+        campaignStartDate,
+        numberOfDistributions,
+        selectedAudience,
+        checkboxSelections,
+      },
+    },
+  }) => ({
+    ...ownProps,
+    campaignStartDate,
+    numberOfDistributions,
+    selectedAudience,
+    checkboxSelections,
+  }),
+};
+
+export default compose(
+  graphql(DETAILS_QUERY, detailsConfig),
+  graphql(DELIVERY_QUERY, deliveryConfig),
+  graphql(SET_DETAILS_MUTATION, { name: 'setDetails' }),
+);
+```
+
+---
+
+```
+  render() {
+    const {
+      setDetails,
+      campaignStartDate,
+      numberOfDistributions,
+      selectedAudience,
+      checkboxSelections,
+    } = this.props;
+    
+    <Component onClick={() => {
+      setDetails({
+        variables: {
+          name: 'categoryMain',
+          value: (category && category.value) || null,
+        },
+      });
+    }}
+```
