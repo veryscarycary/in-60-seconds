@@ -28,14 +28,14 @@
 ### Pros and Cons
 @snapend
 
-@snap[west span-50]
+@snap[west text-05 span-50]
 Pros
 @ol
 - Similar features from Redux, e.g. caching and offline persistence
 @olend
 @snapend
 
-@snap[east span-50]
+@snap[east text-05 span-50]
 Cons
 @ol
 - Very particular with call  e.g. \_\_typename
@@ -57,15 +57,15 @@ Cons
 
 ## Typical query
 
-@snap[midpoint]
-```typescript
+@snap[midpoint text-06]
+```
 import gql from 'graphql-tag';
-/* eslint-disable graphql/template-strings */
+
 const CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY = gql`
   query campaignDetailsValidation {
     campaignDetails @client {
       formValidation {
-        \_\_typename
+        __typename
         isFormValid
       }
     }
