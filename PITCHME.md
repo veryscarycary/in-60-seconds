@@ -47,7 +47,7 @@ Cons
 
 ---
 @snap[north]
-### Then how do we differentiate between local and server calls?
+##### Then how do we differentiate between local and server calls?
 @snapend
 
 @snap[midpoint fragment]
