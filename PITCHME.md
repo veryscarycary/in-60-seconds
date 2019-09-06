@@ -167,7 +167,7 @@ You can extend the Query and Mutation types and add your own graphql types in th
 
 ---
 
-@snap[north span-100 text-03]
+@snap[north span-100 text-06]
 ```
 const deliveryConfig = {
   props: ({
@@ -198,7 +198,7 @@ export default compose(
 @snapend
 
 ---
-@snap[north span-100 text-03]
+@snap[north span-100 text-06]
 ```
   render() {
     const {
