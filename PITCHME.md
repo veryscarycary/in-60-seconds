@@ -28,14 +28,14 @@
 ### Pros and Cons
 @snapend
 
-@snap[west text-05 span-50]
+@snap[text-05 span-50]
 Pros
 @ol
 - Similar features from Redux, e.g. caching and offline persistence
 @olend
 @snapend
 
-@snap[east text-05 span-50]
+@snap[text-05 span-50]
 Cons
 @ol
 - Very particular with call  e.g. \_\_typename
