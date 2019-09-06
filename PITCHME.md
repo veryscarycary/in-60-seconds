@@ -135,7 +135,7 @@ export const deliveryDefaults = {
 #### \_\_typename is very important
 @snapend
 
-@snap[midpoint text-08]
+@snap[midpoint span-100 text-08]
  Your queries/mutations will fail if \_\_typename is not declared in your defaults for an objects and they MAY fail if you do not provide it in your payload to a mutation.
 @snapend
 
@@ -145,7 +145,7 @@ export const deliveryDefaults = {
 #### Local Schema
 @snapend
 
-@snap[midpoint text-08]
+@snap[midpoint span-100 text-07]
  * Look at local.graphql.js in portal *
  
  However, somewhat contrary to the last slide...
