@@ -187,6 +187,7 @@ export const deliveryDefaults = {
 @snapend
 
 ---
+
 @snap[north span-100]
 #### You may find yourself doing this if you're working with GQL FE + BE
 @snapend
@@ -216,7 +217,7 @@ export const mapCampaignDeliveryToGql = campaignDelivery => {
 };
 ```
 
-@snap[west text-05 span-50]
+@snap[southwest text-05 span-50]
 @ol
 - While \_\_typename is necessary on FE, it is not tolerated on BE
 @olend
