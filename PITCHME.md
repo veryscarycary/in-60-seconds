@@ -25,26 +25,57 @@
 ---
 
 @snap[north span-100]
-### What kind of outputs can we observe?
+### Pros and Cons
 @snapend
 
+@snap[west span-50]
+Pros
 @ol
-- Responses to requests
-- Externally-stored state (DB, Cache, Event Streams)
-- Logs @fa[pepper-hot]
-- Metrics @fa[pepper-hot] @fa[pepper-hot]
-- Tracing @fa[pepper-hot] @fa[pepper-hot] @fa[pepper-hot]
+- Similar features from Redux, e.g. caching and offline persistence
 @olend
+@snapend
+
+@snap[east span-50]
+Cons
+@ol
+- Very particular with call  e.g. __typename
+- Apollo Dev Tools are buggy/not too insightful
+- Error logging is not descriptive/helpful
+- Updating store while queries are in-flight can cause errors
+@olend
+@snapend
 
 ---
 
-![Trifecta](https://peter.bourgon.org/img/instrumentation/01.png)
+### Then how do we differentiate between local and server calls?
 
-@size[0.6em](https://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html)
+@snap[midpoint fragment]
+ I'm glad you asked
+@snapend
 
 ---
 
-## 1. Responses to requests
+## Typical query
+
+@snap[midpoint]
+```typescript
+import gql from 'graphql-tag';
+/* eslint-disable graphql/template-strings */
+const CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY = gql`
+  query campaignDetailsValidation {
+    campaignDetails @client {
+      formValidation {
+        __typename
+        isFormValid
+      }
+    }
+  }
+`;
+
+export default CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY;
+```
+
+@snapend
 
 ---
 
