@@ -187,6 +187,42 @@ export const deliveryDefaults = {
 @snapend
 
 ---
+@snap[north span-100]
+#### You may find yourself doing this if you're working with GQL FE + BE
+@snapend
+
+```
+export const mapCampaignDeliveryToGql = campaignDelivery => {
+  const {
+    selectedAudience,
+    checkboxSelections,
+    areDistrictGuidelinesConfirmed,
+    campaignStartDate,
+    numberOfDistributions,
+  } = campaignDelivery;
+
+  const campaignDeliverySettings = {
+    selectedAudience,
+    targetAudiences: checkboxSelections.map(selection =>
+      omit(selection, '__typename')
+    ),
+    numberOfDistributions,
+    districtGuidelinesConfirmed: !!areDistrictGuidelinesConfirmed,
+  };
+
+  if (campaignStartDate) campaignDeliverySettings.startDate = campaignStartDate;
+
+  return campaignDeliverySettings;
+};
+```
+
+@snap[west text-05 span-50]
+@ol
+- While \_\_typename is necessary on FE, it is not tolerated on BE
+@olend
+@snapend
+
+---
 
 @snap[north span-100]
 #### Local Schema
@@ -277,14 +313,15 @@ export default compose(
 Pros
 @ol
 - Similar features from Redux, e.g. caching and offline persistence
-- Organization can be cleaner
+- If organized properly, can look very clean and straightforward
+
 @olend
 @snapend
 
 @snap[east text-05 span-50]
 Cons
 @ol
-- Very particular with syntax  e.g. \_\_typename
+- Very particular about shape  e.g. \_\_typename
 - Apollo Dev Tools are buggy/not too insightful
 - Error logging is not descriptive/helpful
 - Updating store while queries are in-flight can cause errors
