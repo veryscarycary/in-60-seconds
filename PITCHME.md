@@ -55,7 +55,7 @@ Cons
 @snapend
 
 ---
-@snap[north fragment]
+@snap[north span-100]
  #### Typical query
 @snapend
 
@@ -66,9 +66,8 @@ import gql from 'graphql-tag';
 const CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY = gql`
   query campaignDetailsValidation {
     campaignDetails @client {
-      formValidation {```
+      formValidation {
         __typename
-        ```
         isFormValid
       }
     }
@@ -83,43 +82,75 @@ export default CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY;
 ---
 
 @snap[north span-100]
-### Benefits & Disadvantages of Responses
+ #### Typical mutation
 @snapend
 
-@ul
-- Typically the first indication of a problem
-- Can be tied into monitoring (alerts)
-- May be intentionally masked from requestor (don't show the deatils of internal errors)
-- @color[red](**Low resolution**: doesn't give you a lot of insight into how the request ended up in this state.)
-@ulend
+@snap[midpoint text-07]
+```
+import gql from 'graphql-tag';
+
+
+export const SET_CHECKBOX_SELECTIONS_MUTATION = gql`
+  mutation setCheckboxSelections($checkboxSelections: [Audience]!) {
+    setCheckboxSelections(checkboxSelections: $checkboxSelections) @client
+  }
+`;
+```
+
+@snapend
+
+---
+
+@snap[north]
+##### How do I set the default values?
+@snapend
 
 ---
 
 @snap[north span-100]
-### Our approach to Responses
+ #### Typical default values setup
 @snapend
 
-@ul
-- Impose strict structure on API outputs
-- Use custom errors with an [error ontology that supports hierarchies](https://peachjar.atlassian.net/wiki/spaces/ENG/pages/45350931/Error+Ontology)
-- Auto map errors to protocol (GQL, REST) responses
-- @color[orange](TODO: UI interprets errors within context, or<br />falls back to global error handler.)
-@ulend
+@snap[midpoint text-07]
+```
+export const deliveryDefaults = {
+  campaignDelivery: {
+    __typename: 'CampaignDelivery',
+    selectedAudience: 'parents',
+    checkboxSelections: [],
+    areDistrictGuidelinesConfirmed: false,
+    campaignStartDate: null,
+    numberOfDistributions: 1,
+    formValidation: {
+      __typename: 'CampaignDeliveryFormValidation',
+      isFormValid: false,
+    },
+  },
+};
+```
 
 ---
 
 @snap[north span-100]
-#### Structured Responses - HTTP/REST
+#### \_\_typename is very important
 @snapend
 
-@ul
-- @color[orange](Success responses are weakly defined.)
-- Error responses are always JSON using the [hapijs/Boom](https://github.com/hapijs/boom) framework.
-- Core automaps:
-  - [Route Abstraction](https://github.com/peachjar/peachjar-core/blob/master/src/Interfaces/Framework/HttpApi/Route.ts#L44)
-  - [Error Mapper](https://github.com/peachjar/peachjar-core/blob/master/src/Interfaces/Framework/HttpApi/Utils.ts#L13)
-- BFF Framework automaps:
-  - [Error Mapper](https://github.com/peachjar/bff-framework/blob/master/src/framework/middleware/errorHandler.ts#L138)
-@ulend
+@snap[midpoint text-08]
+ Your queries/mutations will fail if \_\_typename is not declared in your defaults for an objects and they MAY fail if you do not provide it in your payload to a mutation.
+@snapend
+
+---
+
+@snap[north span-100]
+#### Local Schema
+@snapend
+
+@snap[midpoint text-08]
+ * Look at local.graphql.js in portal *
+ 
+ However, somewhat contrary to the last slide...
+ 
+You can extend the Query and Mutation types and add your own graphql types in this file. The system doesn't seem very strict about this. In fact, if you do not create types for your local cache items, the app will still function as expected.
+@snapend
 
 ---
