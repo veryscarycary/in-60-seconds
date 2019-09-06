@@ -11,11 +11,11 @@
 
 ---
 
-@snap[north span-100]
+@snap[midpoint span-100]
 ## What is Apollo Link State?
 @snapend
 
-@snap[midpoint fragment]
+@snap[midpoint fragment text-07]
 “In the past, Apollo users stored their application's local data in a separate Redux or MobX store. With apollo-link-state, you no longer have to maintain a second store for local state. You can instead use the Apollo Client cache as your single source of truth that holds all of your local data alongside your remote data. To access or update your local state, you use GraphQL queries and mutations just like you would for data from a server.”
 <br />https://www.apollographql.com/docs/link/links/state/
 @snapend
