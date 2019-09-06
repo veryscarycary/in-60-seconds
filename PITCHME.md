@@ -192,6 +192,7 @@ export const deliveryDefaults = {
 #### You may find yourself doing this if you're working with GQL FE + BE
 @snapend
 
+@snap[midpoint text-06]
 ```
 export const mapCampaignDeliveryToGql = campaignDelivery => {
   const {
@@ -216,6 +217,7 @@ export const mapCampaignDeliveryToGql = campaignDelivery => {
   return campaignDeliverySettings;
 };
 ```
+@snapend
 
 @snap[southwest text-05 span-50]
 @ol
