@@ -25,33 +25,45 @@
 ---
 
 @snap[north span-100]
-### Pros and Cons
+#### The Setup
 @snapend
 
-@snap[west text-05 span-50]
-Pros
-@ol
-- Similar features from Redux, e.g. caching and offline persistence
-@olend
+@snap[midpoint text-07]
+
+```typescript
+const httpLink = new HttpLink({
+  uri: BFF_GRAPHQL_URI,
+  credentials: 'include',
+});
+
+const cache = new InMemoryCache();
+
+const stateLink = withClientState({
+  cache,
+  resolvers,
+  defaults,
+});
+
+export const apolloClient = new ApolloClient({
+  link: ApolloLink.from([stateLink, httpLink]),
+  cache,
+});
+
+export default apolloClient;
+```
 @snapend
 
-@snap[east text-05 span-50]
-Cons
-@ol
-- Very particular with call  e.g. \_\_typename
-- Apollo Dev Tools are buggy/not too insightful
-- Error logging is not descriptive/helpful
-- Updating store while queries are in-flight can cause errors
-@olend
+@snap[south text-06]
+ * order matters when it comes to the link order
 @snapend
 
 ---
 @snap[north]
-##### Then how do we differentiate between local and server calls?
+##### How do we differentiate between local and server calls?
 @snapend
 
 @snap[midpoint fragment]
- I'm glad you asked
+ Well I'm glad you asked
 @snapend
 
 ---
@@ -254,3 +266,28 @@ export default compose(
     }}
 ```
 @snapend
+
+---
+
+@snap[north span-100]
+### Pros and Cons
+@snapend
+
+@snap[west text-05 span-50]
+Pros
+@ol
+- Similar features from Redux, e.g. caching and offline persistence
+- Organization can be cleaner
+@olend
+@snapend
+
+@snap[east text-05 span-50]
+Cons
+@ol
+- Very particular with syntax  e.g. \_\_typename
+- Apollo Dev Tools are buggy/not too insightful
+- Error logging is not descriptive/helpful
+- Updating store while queries are in-flight can cause errors
+@olend
+@snapend
+
