@@ -1,77 +1,89 @@
-# Let's Get Started
+---
+
+@snap[midpoint span-100]
+## Apollo Link State
+### in Peachjar systems
+@snapend
+
+@snap[south-east span-20]
+![Logo](assets/pj-logo-header.svg)
+@snapend
 
 ---
 
-## Add Some Slide Candy
-
-![IMAGE](assets/img/presentation.png)
-
----?color=linear-gradient(180deg, white 75%, black 25%)
-@title[Customize Slide Layout]
-
-@snap[west span-50]
-## Customize the Layout
+@snap[north span-100]
+## What is Apollo Link State?
 @snapend
 
-@snap[east span-50]
-![IMAGE](assets/img/presentation.png)
+@snap[midpoint fragment]
+“In the past, Apollo users stored their application's local data in a separate Redux or MobX store. With apollo-link-state, you no longer have to maintain a second store for local state. You can instead use the Apollo Client cache as your single source of truth that holds all of your local data alongside your remote data. To access or update your local state, you use GraphQL queries and mutations just like you would for data from a server.”
+<br />https://www.apollographql.com/docs/link/links/state/
 @snapend
 
-@snap[south span-100 text-white]
-Snap Layouts let you create custom slide designs directly within your markdown.
+---
+
+@snap[north span-100]
+### What kind of outputs can we observe?
 @snapend
 
----?color=linear-gradient(90deg, #5384AD 65%, white 35%)
-@title[Add A Little Imagination]
+@ol
+- Responses to requests
+- Externally-stored state (DB, Cache, Event Streams)
+- Logs @fa[pepper-hot]
+- Metrics @fa[pepper-hot] @fa[pepper-hot]
+- Tracing @fa[pepper-hot] @fa[pepper-hot] @fa[pepper-hot]
+@olend
 
-@snap[north-west h4-white]
-#### And start presenting...
+---
+
+![Trifecta](https://peter.bourgon.org/img/instrumentation/01.png)
+
+@size[0.6em](https://peter.bourgon.org/blog/2017/02/21/metrics-tracing-and-logging.html)
+
+---
+
+## 1. Responses to requests
+
+---
+
+@snap[north span-100]
+### Benefits & Disadvantages of Responses
 @snapend
 
-@snap[west span-55]
-@ul[list-spaced-bullets text-white text-09]
-- You will be amazed
-- What you can achieve
-- *With a little imagination...*
-- And **GitPitch Markdown**
+@ul
+- Typically the first indication of a problem
+- Can be tied into monitoring (alerts)
+- May be intentionally masked from requestor (don't show the deatils of internal errors)
+- @color[red](**Low resolution**: doesn't give you a lot of insight into how the request ended up in this state.)
 @ulend
-@snapend
-
-@snap[east span-45]
-@img[shadow](assets/img/conference.png)
-@snapend
 
 ---
 
-@snap[north-east span-100 text-pink text-06]
-Let your code do the talking!
+@snap[north span-100]
+### Our approach to Responses
 @snapend
 
-```sql zoom-18
-CREATE TABLE "topic" (
-    "id" serial NOT NULL PRIMARY KEY,
-    "forum_id" integer NOT NULL,
-    "subject" varchar(255) NOT NULL
-);
-ALTER TABLE "topic"
-ADD CONSTRAINT forum_id
-FOREIGN KEY ("forum_id")
-REFERENCES "forum" ("id");
-```
+@ul
+- Impose strict structure on API outputs
+- Use custom errors with an [error ontology that supports hierarchies](https://peachjar.atlassian.net/wiki/spaces/ENG/pages/45350931/Error+Ontology)
+- Auto map errors to protocol (GQL, REST) responses
+- @color[orange](TODO: UI interprets errors within context, or<br />falls back to global error handler.)
+@ulend
 
-@snap[south span-100 text-gray text-08]
-@[1-5](You can step-and-ZOOM into fenced-code blocks, source files, and Github GIST.)
-@[6,7, zoom-13](Using GitPitch live code presenting with optional annotations.)
-@[8-9, zoom-12](This means no more switching between your slide deck and IDE on stage.)
+---
+
+@snap[north span-100]
+#### Structured Responses - HTTP/REST
 @snapend
 
+@ul
+- @color[orange](Success responses are weakly defined.)
+- Error responses are always JSON using the [hapijs/Boom](https://github.com/hapijs/boom) framework.
+- Core automaps:
+  - [Route Abstraction](https://github.com/peachjar/peachjar-core/blob/master/src/Interfaces/Framework/HttpApi/Route.ts#L44)
+  - [Error Mapper](https://github.com/peachjar/peachjar-core/blob/master/src/Interfaces/Framework/HttpApi/Utils.ts#L13)
+- BFF Framework automaps:
+  - [Error Mapper](https://github.com/peachjar/bff-framework/blob/master/src/framework/middleware/errorHandler.ts#L138)
+@ulend
 
----?image=assets/img/presenter.jpg
-
-@snap[north span-100 h2-white]
-## Now It's Your Turn
-@snapend
-
-@snap[south span-100 text-06]
-[Click here to jump straight into the interactive feature guides in the GitPitch Docs @fa[external-link]](https://gitpitch.com/docs/getting-started/tutorial/)
-@snapend
+---
