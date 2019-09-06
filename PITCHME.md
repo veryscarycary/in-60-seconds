@@ -38,7 +38,7 @@ Pros
 @snap[east span-50]
 Cons
 @ol
-- Very particular with call  e.g. __typename
+- Very particular with call  e.g. \_\_typename
 - Apollo Dev Tools are buggy/not too insightful
 - Error logging is not descriptive/helpful
 - Updating store while queries are in-flight can cause errors
@@ -65,7 +65,7 @@ const CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY = gql`
   query campaignDetailsValidation {
     campaignDetails @client {
       formValidation {
-        __typename
+        \_\_typename
         isFormValid
       }
     }
