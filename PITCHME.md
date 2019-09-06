@@ -234,10 +234,6 @@ export const mapCampaignDeliveryToGql = campaignDelivery => {
 @snap[midpoint span-100 text-07]
  * Look at local.graphql.js in portal *
  
- 
- However, somewhat contrary to the last slide...
- 
- 
 You can extend the Query and Mutation types and add your own graphql types in this file. The system doesn't seem very strict about this. In fact, if you do not create types for your local cache items, the app will still function as expected.
 @snapend
 
