@@ -101,6 +101,41 @@ export const SET_CHECKBOX_SELECTIONS_MUTATION = gql`
 
 ---
 
+@snap[north span-100]
+ #### Local Resolvers
+@snapend
+
+@snap[midpoint span-100 text-07]
+```typescript
+
+export const setDetails = (_obj, { name, value }, { cache }) => {
+  cache.writeQuery({
+    query: DETAILS_QUERY,
+    data: {
+      campaignDetails: {
+        __typename: 'CampaignDetails',
+        [name]: value,
+      },
+    },
+  });
+  return null;
+};
+
+// Resolvers
+
+export const detailsResolvers = {
+  setDetails,
+  setDetailsBoolean,
+  handlePrimaryCTASelection,
+  handleSecondaryCTASelection,
+  handleCTAData,
+  rehydrateDetailsCache,
+  handleCampaignDetailsFormValidation,
+};
+
+```
+---
+
 @snap[north]
 ##### How do I set the default values?
 @snapend
@@ -167,7 +202,7 @@ You can extend the Query and Mutation types and add your own graphql types in th
 
 ---
 
-@snap[north span-100 text-06]
+@snap[north span-100 text-07]
 ```
 const deliveryConfig = {
   props: ({
@@ -198,7 +233,7 @@ export default compose(
 @snapend
 
 ---
-@snap[north span-100 text-06]
+@snap[north span-100 text-07]
 ```
   render() {
     const {
