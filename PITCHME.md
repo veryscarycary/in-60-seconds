@@ -55,10 +55,11 @@ Cons
 @snapend
 
 ---
+@snap[north fragment]
+ #### Typical query
+@snapend
 
-## Typical query
-
-@snap[midpoint text-06]
+@snap[midpoint text-07]
 ```
 import gql from 'graphql-tag';
 
