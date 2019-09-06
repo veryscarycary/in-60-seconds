@@ -66,8 +66,9 @@ import gql from 'graphql-tag';
 const CAMPAIGN_DETAILS_VALIDATION_CLIENT_QUERY = gql`
   query campaignDetailsValidation {
     campaignDetails @client {
-      formValidation {
+      formValidation {```
         __typename
+        ```
         isFormValid
       }
     }
