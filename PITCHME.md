@@ -219,7 +219,7 @@ export const mapCampaignDeliveryToGql = campaignDelivery => {
 ```
 @snapend
 
-@snap[southwest text-05 span-50]
+@snap[south text-05 span-50]
 @ol
 - While \_\_typename is necessary on FE, it is not tolerated on BE
 @olend
